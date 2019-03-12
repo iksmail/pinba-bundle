@@ -71,7 +71,7 @@ class Redis extends \Redis
         return $result;
     }
 
-    public function exists($key)
+    public function exists($key, ...$other_keys)
     {
         if ($this->stopwatch) {
             $e = $this->getStopwatchEvent('exists');
@@ -86,13 +86,13 @@ class Redis extends \Redis
         return $result;
     }
 
-    public function set($key, $var)
+    public function set($key, $value, $opts = NULL)
     {
         if ($this->stopwatch) {
             $e = $this->getStopwatchEvent('set');
         }
 
-        $result = parent::set($key, $var);
+        $result = parent::set($key, $value, $opts);
 
         if ($this->stopwatch) {
             $e->stop();
@@ -116,13 +116,13 @@ class Redis extends \Redis
         return $result;
     }
 
-    public function mSetNx($v)
+    public function mSetNx(array $pairs)
     {
         if ($this->stopwatch) {
             $e = $this->getStopwatchEvent('mSetNx');
         }
 
-        $result = parent::mSetNx($v);
+        $result = parent::mSetNx($pairs);
 
         if ($this->stopwatch) {
             $e->stop();
@@ -161,7 +161,7 @@ class Redis extends \Redis
         return $result;
     }
 
-    public function delete($key)
+    public function delete($key, ...$other_keys)
     {
         if ($this->stopwatch) {
             $e = $this->getStopwatchEvent('delete');
